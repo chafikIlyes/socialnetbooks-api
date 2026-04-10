@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,8 +22,8 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(),userDetails);
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails);
     }
 
 
@@ -32,25 +31,24 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims,T> claimResolver) {
+    private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
         return Jwts
-                .parser()                // Remplacé parserBuilder() par parser()
-                .verifyWith(getSignInKey()) // Remplacé setSigningKey() par verifyWith()
+                .parser()
+                .verifyWith(getSignInKey())
                 .build()
-                .parseSignedClaims(token)   // Remplacé parseClaimsJws() par parseSignedClaims()
+                .parseSignedClaims(token)
                 .getPayload();
     }
 
-    private  String generateToken(
-            Map<String,Object> claims,
-            UserDetails userDetails)
-    {
-        return buildToken(claims,userDetails, jwtExpiration);
+    private String generateToken(
+            Map<String, Object> claims,
+            UserDetails userDetails) {
+        return buildToken(claims, userDetails, jwtExpiration);
     }
 
     private String buildToken(
@@ -67,21 +65,19 @@ public class JwtService {
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+jwtExpiration))
-                .claim("authorities",authorities)
+                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .claim("authorities", authorities)
                 .signWith(getSignInKey())
                 .compact();
 
     }
-    private SecretKey getSignInKey() {
-        // 1. Décodage de la clé secrète depuis Base64
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 
-        // 2. Génération de la clé HMAC-SHA sécurisée
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername())
                 && !isTokenExpired(token));

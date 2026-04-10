@@ -1,6 +1,5 @@
 package com.gouasmia.dev.socialnetbooks.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gouasmia.dev.socialnetbooks.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +27,7 @@ public class User implements UserDetails, Principal {
 
     @Id
     @GeneratedValue
-    private Integer Id ;
+    private Integer Id;
     private String firstname;
     private String lastName;
     private String password;
@@ -39,7 +38,7 @@ public class User implements UserDetails, Principal {
     private boolean enabled;
     @CreatedDate()
 
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDate createDate;
     @LastModifiedDate
     @Column(insertable = false)
@@ -57,7 +56,7 @@ public class User implements UserDetails, Principal {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
                 .map(r -> new SimpleGrantedAuthority(r.getName()))
-                .toList() ;
+                .toList();
     }
 
     @Override
@@ -91,7 +90,7 @@ public class User implements UserDetails, Principal {
     }
 
     public String getFullName() {
-        return lastName + " " +firstname;
+        return lastName + " " + firstname;
     }
 
 }

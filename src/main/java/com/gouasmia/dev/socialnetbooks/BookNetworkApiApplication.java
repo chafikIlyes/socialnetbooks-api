@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class BookNetworkApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BookNetworkApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BookNetworkApiApplication.class, args);
+    }
 
 }
