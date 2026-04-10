@@ -1,0 +1,32 @@
+services:
+  postgres:
+    container_name: postgres-sql-bsn
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres  # Aligné avec le point de montage du volume ci-dessous
+      POSTGRES_DB: book_social_network
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-demo
+    volumes:
+      - postgres:/data/postgres # Correction : Bien indenté sous le service
+    restart: unless-stopped
+  mail-dev:
+    container_name: mail-dev-bsn
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - spring-demo # Optionnel : recommandé pour que l'app communique avec maildev
+
+networks:
+  spring-demo:
+    driver: bridge
+
+# Correction Erreur 3 : Déclaration obligatoire du volume au niveau racine
+volumes:
+  postgres:
