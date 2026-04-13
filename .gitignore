@@ -60,4 +60,9 @@ src/main/resources/application-dev.yml
 src/main/resources/application-dev.yaml
 src/main/resources/application-dev.properties
 .env
+# Configuration principale (contient souvent les identifiants par défaut)
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/application.yaml
+
 
