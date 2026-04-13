@@ -1,4 +1,18 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book_social_network
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        "[format_sql]": true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   profiles:
     active: dev
   servlet:
@@ -10,4 +24,12 @@ springdoc:
 server:
   servlet:
     context-path: /api/v1/
+
+application:
+  security:
+    jwt:
+      # La clé doit être une chaîne Base64 d'au moins 256 bits (32 caractères min)
+      secret-key: "MzFhYmNkMTIzNGU1Njc4OWZlZ2gxMmozaTRqNms3bDg5MGFiY2RlZg=="
+      # Optionnel : définir l'expiration ici aussi (ex: 1 jour en millisecondes)
+      expiration: 86400000
 

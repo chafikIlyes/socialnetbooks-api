@@ -4,7 +4,6 @@ import com.gouasmia.dev.socialnetbooks.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,12 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "_user")
 @EntityListeners(EntityListeners.class)
 public class User implements UserDetails, Principal {
 
-    @Id
-    @GeneratedValue
+    @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     private String firstname;
     private String lastName;
@@ -37,7 +36,6 @@ public class User implements UserDetails, Principal {
     private boolean accountLocked;
     private boolean enabled;
     @CreatedDate()
-
     @Column(nullable = false, updatable = false)
     private LocalDate createDate;
     @LastModifiedDate

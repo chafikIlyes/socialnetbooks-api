@@ -2,12 +2,8 @@ package com.gouasmia.dev.socialnetbooks.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gouasmia.dev.socialnetbooks.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @EntityListeners(EntityListeners.class)
 public class Role {
 
